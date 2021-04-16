@@ -2,7 +2,7 @@ const simpleGit = require('simple-git');
 const fse = require('fs-extra');
 const path = require('path');
 
-let basePath = process.cwd;
+let basePath = process.cwd();
 
 run(basePath);
 
