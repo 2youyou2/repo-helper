@@ -2,7 +2,7 @@
   "name": "repo-helper",
   "version": "0.0.1",
   "bin": {
-    "repo-helper": "./index.js"
+    "repo-helper": "./bin/repo-helper"
   },
   "dependencies": {
     "fs-extra": "^9.1.0",
