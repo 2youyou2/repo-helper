@@ -1,0 +1,11 @@
+{
+  "name": "repo-helper",
+  "version": "0.0.1",
+  "bin": {
+    "repo-helper": "./index.js"
+  },
+  "dependencies": {
+    "fs-extra": "^9.1.0",
+    "simple-git": "^2.38.0"
+  }
+}
