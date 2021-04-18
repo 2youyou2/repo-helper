@@ -59,15 +59,17 @@ async function run () {
   let basePath = process.cwd();
   await updateRepo(basePath);
 
+  console.log();
+
   if (erros.length) {
-    console.log('Update repos failed : ');
+    console.info('Update repos failed : ');
 
     erros.forEach(err => {
       console.error(err);
     })
   }
   else {
-    console.log('Update repos successfully.');
+    console.info('Update repos successfully.');
   }
 }
 
