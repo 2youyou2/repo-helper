@@ -1,6 +1,6 @@
 {
   "name": "repo-helper",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "bin": {
     "repo-helper": "./bin/repo-helper"
   },
