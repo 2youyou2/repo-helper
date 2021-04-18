@@ -2,10 +2,6 @@ const simpleGit = require('simple-git');
 const fse = require('fs-extra');
 const path = require('path');
 
-let basePath = process.cwd();
-
-run(basePath);
-
 let erros = []
 
 async function run(basePath) {
@@ -57,6 +53,10 @@ async function run(basePath) {
     await run(dst);
   }
 }
+
+
+let basePath = process.cwd();
+await run(basePath);
 
 if (erros.length) {
   console.log('Update repos failed : ');
