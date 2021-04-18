@@ -4,7 +4,7 @@ const path = require('path');
 
 let erros = []
 
-async function run(basePath) {
+async function updateRepo(basePath) {
   let packagePath = path.join(basePath, './package.json');
   if (!fse.existsSync(packagePath)) {
     return;
@@ -50,22 +50,26 @@ async function run(basePath) {
       erros.push(err);
     }
 
-    await run(dst);
+    await updateRepo(dst);
   }
 }
 
 
-let basePath = process.cwd();
-await run(basePath);
+async function run () {
+  let basePath = process.cwd();
+  await updateRepo(basePath);
 
-if (erros.length) {
-  console.log('Update repos failed : ');
-  
-  erros.forEach(err => {
-    console.error(err);
-  })
+  if (erros.length) {
+    console.log('Update repos failed : ');
+
+    erros.forEach(err => {
+      console.error(err);
+    })
+  }
+  else {
+    console.log('Update repos successfully.');
+  }
 }
-else {
-  console.log('Update repos successfully.');
-}
+
+run();
 
