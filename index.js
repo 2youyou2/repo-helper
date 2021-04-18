@@ -6,6 +6,8 @@ let basePath = process.cwd();
 
 run(basePath);
 
+let erros = []
+
 async function run(basePath) {
   let packagePath = path.join(basePath, './package.json');
   if (!fse.existsSync(packagePath)) {
@@ -49,9 +51,21 @@ async function run(basePath) {
       await git.checkout(['-B', branch, `origin/${branch}`]);
       // await git.checkout([`origin/${branch}`]);
     } catch (err) {
-      console.error(err);
+      erros.push(err);
     }
 
     await run(dst);
   }
 }
+
+if (erros.length) {
+  console.log('Update repos failed : ');
+  
+  erros.forEach(err => {
+    console.error(err);
+  })
+}
+else {
+  console.log('Update repos successfully.');
+}
+
