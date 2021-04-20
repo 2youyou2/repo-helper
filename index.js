@@ -16,7 +16,7 @@ async function updateRepo(basePath) {
   }
 
   for (let repoPath in package.repos) {
-    let { url, branch } = package.repos[repoPath];
+    let { url, branch, private } = package.repos[repoPath];
     let dst = path.join(basePath, repoPath);
     fse.ensureDirSync(dst);
 
@@ -47,7 +47,9 @@ async function updateRepo(basePath) {
       await git.checkout(['-B', branch, `origin/${branch}`]);
       // await git.checkout([`origin/${branch}`]);
     } catch (err) {
-      erros.push(err);
+      if (!private) {
+        erros.push(err);
+      }
     }
 
     await updateRepo(dst);
