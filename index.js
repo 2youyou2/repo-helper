@@ -48,6 +48,7 @@ async function updateRepo(basePath) {
       await git.checkout(['-B', branch, `origin/${branch}`]);
       // await git.checkout([`origin/${branch}`]);
     } catch (err) {
+      err = 'Update ' + dst + 'failed : \n' + err
       if (!private) {
         erros.push(err);
       }
