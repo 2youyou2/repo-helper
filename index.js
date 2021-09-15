@@ -16,7 +16,8 @@ async function updateRepo(basePath) {
   }
 
   for (let repoPath in package.repos) {
-    let { url, branch, private } = package.repos[repoPath];
+    let { url, branch, private, recursive } = package.repos[repoPath];
+
     let dst = path.join(basePath, repoPath);
     fse.ensureDirSync(dst);
 
@@ -53,7 +54,9 @@ async function updateRepo(basePath) {
       });
     }
 
-    await updateRepo(dst);
+    if (recursive !== false) {
+      await updateRepo(dst);
+    }
   }
 }
 
