@@ -3,7 +3,6 @@ const fse = require('fs-extra');
 const path = require('path');
 
 let erros = []
-let warns = []
 
 async function updateRepo(basePath) {
   let packagePath = path.join(basePath, './package.json');
@@ -48,13 +47,10 @@ async function updateRepo(basePath) {
       await git.checkout(['-B', branch, `origin/${branch}`]);
       // await git.checkout([`origin/${branch}`]);
     } catch (err) {
-      err = 'Update ' + dst + 'failed : \n' + err
-      if (!private) {
-        erros.push(err);
-      }
-      else {
-        warns.push(err);
-      }
+      erros.push({
+        err,
+        url
+      });
     }
 
     await updateRepo(dst);
@@ -68,15 +64,12 @@ async function run () {
 
   console.log();
   
-  warns.forEach(err => {
-    console.warn(err);
-  })
-
   if (erros.length) {
-    console.info('Update repos failed : ');
+    erros.forEach(info => {
+      console.log('------------------------------------');
+      console.log(`Update repo [${info.url}] failed : `);
 
-    erros.forEach(err => {
-      console.error(err);
+      console.error(info.err);
     })
   }
   else {
