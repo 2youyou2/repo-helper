@@ -4,7 +4,12 @@ const path = require('path');
 
 let erros = []
 
-async function updateRepo(basePath) {
+console.log('repo-helper : ' + process.argv.join(', '))
+
+let targetCommand = process.argv[2] || 'default'
+console.log('targetCommand : ' + targetCommand)
+
+async function updateRepo (basePath) {
   let packagePath = path.join(basePath, './package.json');
   if (!fse.existsSync(packagePath)) {
     return;
@@ -16,7 +21,18 @@ async function updateRepo(basePath) {
   }
 
   for (let repoPath in package.repos) {
-    let { url, branch, private, recursive } = package.repos[repoPath];
+    let { url, branch, recursive, commands } = package.repos[repoPath];
+
+    if (!commands) {
+      commands = ['default']
+    }
+    else if (!Array.isArray(commands)) {
+      commands = [commands]
+    }
+
+    if (commands.indexOf(targetCommand) === -1) {
+      continue;
+    }
 
     let dst = path.join(basePath, repoPath);
     fse.ensureDirSync(dst);
@@ -66,7 +82,7 @@ async function run () {
   await updateRepo(basePath);
 
   console.log();
-  
+
   if (erros.length) {
     erros.forEach(info => {
       console.log('------------------------------------');
