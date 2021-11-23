@@ -71,6 +71,7 @@ async function updateRepo (basePath) {
     }
 
     if (recursive !== false) {
+      targetCommand = 'default'
       await updateRepo(dst);
     }
   }
